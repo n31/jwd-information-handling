@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 public class TextReaderUtil {
     private static final Logger logger = LogManager.getLogger(TextReaderUtil.class);
 
-    static String read(String filePath) {
+    public static String read(String filePath) {
         File file = new File(filePath);
         byte[] data = new byte[(int) file.length()];
         try (FileInputStream fis = new FileInputStream(file)) {
