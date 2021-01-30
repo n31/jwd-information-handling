@@ -7,8 +7,8 @@ public class EntireText extends BaseTextComponent {
         composite.forEach(e -> {
             text.append("\t");
             text.append(e.build());
-            text.append("\n");
+            text.append(System.lineSeparator());
         });
-        return text.toString();
+        return text.substring(0, text.length() - System.lineSeparator().length());
     }
 }
