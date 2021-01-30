@@ -1,28 +1,25 @@
 package com.epam.jwd.information_handling.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum ConcreteTextSplitter implements TextSplitter {
-    PARAGRAPH(ENTIRE_TEXT_REGEX, PARAGRAPH_REGEX),
-    SENTENCE(ENTIRE_PARAGRAPH_REGEX, SENTENCE_REGEX),
-    LEXEME(ENTIRE_SENTENCE_REGEX, LEXEME_REGEX),
-    WORD(ENTIRE_LEXEME_REGEX, WORD_REGEX),
-    SYMBOL("", SYMBOL_REGEX);
+    PARAGRAPH(PARAGRAPH_REGEX, EntireText.class.getSimpleName()),
+    SENTENCE(SENTENCE_REGEX, Paragraph.class.getSimpleName()),
+    LEXEME(LEXEME_REGEX, Sentence.class.getSimpleName());
 
-
-
-    private String regexFullMatch;
-    private String regexSplitMatch;
+    private String regex;
+    private String handleClass;
     private TextSplitter next;
     private Pattern pattern;
 
-    ConcreteTextSplitter(String regexFullMatch, String regexSplitMatch) {
-        this.regexFullMatch = regexFullMatch;
-        this.regexSplitMatch = regexSplitMatch;
-        this.pattern = Pattern.compile(regexFullMatch);
+    ConcreteTextSplitter(String regex, String handleClass) {
+        this.regex = regex;
+        this.handleClass = handleClass;
+        this.pattern = Pattern.compile(regex);
     }
 
     @Override
@@ -31,25 +28,49 @@ public enum ConcreteTextSplitter implements TextSplitter {
         return this;
     }
 
-    public String getRegexFullMatch() {
-        return regexFullMatch;
+    public String getRegex() {
+        return regex;
+    }
+
+    public String getHandleClass() {
+        return handleClass;
     }
 
     @Override
-    public List<String> handle(String text) {
-        Matcher matcher = pattern.matcher(text);
-        List<String> textComponents = new ArrayList<>();
-        if (matcher.matches()) {
+    public void handle(TextComponent textComponent, List<TextComponent> composite) {
+        if (textComponent.getClass().getSimpleName().equals(handleClass)) {
+            Matcher matcher = pattern.matcher(textComponent.getValue());
             while(matcher.find()) {
-                textComponents.add(matcher.group());
+                int order = ordinal();
+                TextComponent derivedComponent;
+                switch(order) {
+                    case 0: {
+                        derivedComponent = new Paragraph();
+                        derivedComponent.setValue(matcher.group().trim());
+                    }
+                    break;
+                    case 1: {
+                        derivedComponent = new Sentence();
+                        StringBuilder text = new StringBuilder(matcher.group().trim());
+                        derivedComponent.setEndSign(text.charAt(text.length()-1));
+                        text.deleteCharAt(text.length() - 1);
+                        derivedComponent.setValue(text.toString());
+                    }
+                    break;
+                    case 2: {
+                        derivedComponent = new Lexeme();
+                        derivedComponent.setValue(matcher.group().trim());
+                    }
+                    break;
+                    default: derivedComponent = new EntireText();
+                }
+                derivedComponent.add(derivedComponent);
+                composite.add(derivedComponent);
             }
         } else {
             if (next != null) {
-                next.handle(text);
-            } else {
-                return null;
+                next.handle(textComponent, composite);
             }
         }
-        return textComponents;
     }
 }
