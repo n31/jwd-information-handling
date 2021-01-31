@@ -26,7 +26,7 @@ public class TextSortServiceImplTest {
         text.setValue(TextReaderUtil.read("src/main/resources/text.txt"));
         text.add(text);
         String expected = TextReaderUtil.read("src/main/resources/sentence_sort_expected.txt");
-        text.getComposite().forEach(sorter::sortSentencesByLexemes);
+        sorter.sortSentencesByLexemes(text);
         String actual = text.build();
         Assert.assertEquals(expected, actual);
     }
@@ -36,11 +36,7 @@ public class TextSortServiceImplTest {
         text.setValue(TextReaderUtil.read("src/main/resources/text.txt"));
         text.add(text);
         String expected = TextReaderUtil.read("src/main/resources/lexeme_sort_expected.txt");
-        text.getComposite().forEach(paragraph -> {
-            paragraph.getComposite().forEach(sentence -> {
-                sorter.sortLexemesBySymbolEntrance(sentence, 'o');
-            });
-        });
+        sorter.sortLexemesBySymbolEntrance(text, 'o');
         String actual = text.build();
         Assert.assertEquals(expected, actual);
     }

@@ -23,13 +23,19 @@ public class TextSortServiceImpl implements TextSortService {
     }
 
     @Override
-    public void sortSentencesByLexemes(TextComponent paragraph) {
-        paragraph.getComposite().sort(SENTENCE_COMPARATOR);
+    public void sortSentencesByLexemes(TextComponent entireText) {
+        entireText.getComposite().forEach(paragraph -> {
+            paragraph.getComposite().sort(SENTENCE_COMPARATOR);
+        });
     }
 
     @Override
-    public void sortLexemesBySymbolEntrance(TextComponent sentence, char symbol) {
+    public void sortLexemesBySymbolEntrance(TextComponent entireText, char symbol) {
         lexemeComparator.setSymbol(symbol);
-        sentence.getComposite().sort(lexemeComparator);
+        entireText.getComposite().forEach(paragraph -> {
+            paragraph.getComposite().forEach(sentence -> {
+                sentence.getComposite().sort(lexemeComparator);
+            });
+        });
     }
 }
