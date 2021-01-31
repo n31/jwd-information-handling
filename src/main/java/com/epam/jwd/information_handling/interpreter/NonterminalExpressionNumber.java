@@ -1,7 +1,7 @@
 package com.epam.jwd.information_handling.interpreter;
 
 public class NonterminalExpressionNumber extends AbstractMathExpression {
-    private int number;
+    private final int number;
 
     public NonterminalExpressionNumber(int number) {
         this.number = number;

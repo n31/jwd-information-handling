@@ -12,7 +12,7 @@ public class Sentence extends BaseTextComponent {
         });
         text.deleteCharAt(text.length()-1);
         text.append(endSign);
-        return text.toString().substring(0, 1).toUpperCase() + text.toString().substring(1);
+        return text.substring(0, 1).toUpperCase() + text.substring(1);
     }
 
     @Override

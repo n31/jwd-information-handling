@@ -1,7 +1,5 @@
 package com.epam.jwd.information_handling.domain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,13 +9,11 @@ public enum ConcreteTextSplitter implements TextSplitter {
     SENTENCE(SENTENCE_REGEX, Paragraph.class.getSimpleName()),
     LEXEME(LEXEME_REGEX, Sentence.class.getSimpleName());
 
-    private String regex;
-    private String handleClass;
+    private final String handleClass;
     private TextSplitter next;
-    private Pattern pattern;
+    private final Pattern pattern;
 
     ConcreteTextSplitter(String regex, String handleClass) {
-        this.regex = regex;
         this.handleClass = handleClass;
         this.pattern = Pattern.compile(regex);
     }
@@ -26,14 +22,6 @@ public enum ConcreteTextSplitter implements TextSplitter {
     public TextSplitter setNext(TextSplitter textSplitter) {
         this.next = textSplitter;
         return this;
-    }
-
-    public String getRegex() {
-        return regex;
-    }
-
-    public String getHandleClass() {
-        return handleClass;
     }
 
     @Override

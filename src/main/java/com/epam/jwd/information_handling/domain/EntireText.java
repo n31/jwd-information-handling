@@ -5,7 +5,7 @@ public class EntireText extends BaseTextComponent {
     public String build() {
         StringBuilder text = new StringBuilder();
         composite.forEach(e -> {
-            text.append("\t");
+            text.append("    ");
             text.append(e.build());
             text.append(System.lineSeparator());
         });

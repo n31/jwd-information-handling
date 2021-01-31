@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BitwiseLogicalExpression {
-    private ArrayList<AbstractMathExpression> listExpression = new ArrayList<>();
+    private final ArrayList<AbstractMathExpression> listExpression = new ArrayList<>();
 
     public BitwiseLogicalExpression(String expression) {
         ReversePolishNotation reversePolishNotation = new ReversePolishNotation();
