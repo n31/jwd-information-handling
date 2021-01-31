@@ -3,11 +3,12 @@ package com.epam.jwd.information_handling.interpreter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Client {
+public class BitwiseLogicalExpression {
     private ArrayList<AbstractMathExpression> listExpression = new ArrayList<>();
 
-    public Client(String expression) {
-        parse(expression);
+    public BitwiseLogicalExpression(String expression) {
+        ReversePolishNotation reversePolishNotation = new ReversePolishNotation();
+        parse(reversePolishNotation.convert(expression));
     }
 
     private void parse(String expression) {

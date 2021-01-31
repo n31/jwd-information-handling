@@ -5,6 +5,6 @@ public class TerminalExpressionBitShiftRight extends AbstractMathExpression {
     public void interpret(Context context) {
         Integer rightValue = context.popValue();
         Integer leftValue = context.popValue();
-        context.pushValue((rightValue >> leftValue));
+        context.pushValue((leftValue >> rightValue));
     }
 }
