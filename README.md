@@ -2,6 +2,12 @@
 
 Library that allows you to perform various operations with the text.
 
+## Features
+
+* **Sort paragraphs** by number of sentences
+* **Sort sentences** by token length
+* **Sort tokens** by ascending number of occurrences of a given character
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
