@@ -7,6 +7,7 @@ Library that allows you to perform various operations with the text.
 * **Sort paragraphs** by number of sentences
 * **Sort sentences** by token length
 * **Sort tokens** by ascending number of occurrences of a given character
+* **Calculate bitwise logical expressions** inside a text
 
 ## Getting Started
 
